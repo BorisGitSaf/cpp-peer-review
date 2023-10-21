@@ -11,17 +11,9 @@ using namespace std;
 
 static const size_t MAX_PAGES = 1000;
 
-
-ostream& operator<<(ostream& out, vector<int> v) {
-    for (int i: v) {
-        out << i << ' ';
-    }
-    return out;
-}
-
 class Book {
     public:
-    Book (istream& input, ostream& out): input_(input), out_(out), behind_(MAX_PAGES+1) {}
+    Book (istream& input=cin, ostream& out=cout): input_(input), out_(out), behind_(MAX_PAGES+1) {}
 
     void ReadRequest() {
         string req;
@@ -74,7 +66,7 @@ class Book {
 };
 
 int main() {
-    Book book(cin, cout);
+    Book book;
     int req_num;
     if (cin >> req_num) {
         for (int i = 0; i < req_num; ++i) {
