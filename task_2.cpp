@@ -10,11 +10,6 @@
 
 using namespace std;
 
-
-string Reverse(string_view s, size_t k = 0) {
-    return {s.rbegin() + k, s.rend()};
-}
-
 class Domain {
     public:
     Domain(string domain) {
@@ -24,8 +19,8 @@ class Domain {
         domain_ = move(domain);
     }
 
-    string_view GetDomain() const {
-        return Reverse(domain_);
+    string GetDomain() const {
+        return {domain_.rbegin(), domain_.rend()};
     }
 
     bool operator==(const Domain& other) const {
@@ -36,7 +31,7 @@ class Domain {
         if (other.domain_.size() < domain_.size()) {
             return false;
         }
-        if (other.domain_.substr(0, domain_.size()) == domain_) {
+        if (equal(other.domain_.begin(), other.domain_.begin() + domain_.size(), domain_.begin(), domain_.end())) {
             if (other.domain_.size() == domain_.size() || other.domain_.at(domain_.size() - 1) == '.') {
                 return true;
             }
@@ -55,7 +50,8 @@ class Domain {
 };
 
 Domain ReverseDomain(const Domain& d, bool add_dot = true) {
-    string rev_s = string({d.GetDomain().rbegin(), d.GetDomain().rend()});
+    string rev_s = d.GetDomain();
+    reverse(rev_s.begin(), rev_s.end());
     if (add_dot) {
         rev_s.push_back('.');
     }
